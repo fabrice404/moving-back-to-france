@@ -4,21 +4,26 @@ CREATE TABLE villes (
   code_insee VARCHAR(5) PRIMARY KEY,
   code_postal VARCHAR(5),
   code_departement VARCHAR(2),
-  code_departement VARCHAR(2),
   nom TEXT,
+  
   /* Geograhie */
   geo_altitude INT,
   geo_latitude DECIMAL,
   geo_longitude DECIMAL,
   geo_population INT,
   geo_superficie DECIMAL,
+  geo_densite INT,
   geo_immobilier_prix_m2 INT,
   geo_grande_ville_code_insee VARCHAR(5),
   geo_grande_ville_distance INT,
-  geo_densite INT,
   geo_station_meteo_code VARCHAR(64),
+  geo_taxe_fonciere DECIMAL,
+  geo_shape TEXT,
   /* Commerce */
   commerce_bricolage INT DEFAULT(0),
+  commerce_boucherie INT DEFAULT(0),
+  commerce_primeur INT DEFAULT(0),
+  commerce_chaussures INT DEFAULT(0),
   commerce_boulangerie INT DEFAULT(0),
   commerce_coiffeur INT DEFAULT(0),
   commerce_meubles INT DEFAULT(0),
@@ -26,6 +31,7 @@ CREATE TABLE villes (
   commerce_supermarche INT DEFAULT(0),
   commerce_vetements INT DEFAULT(0),
   /* Education */
+  education_maternelle INT DEFAULT(0),
   education_primaire INT DEFAULT(0),
   education_college INT DEFAULT(0),
   education_lycee INT DEFAULT(0),
@@ -87,7 +93,8 @@ CREATE TABLE villes (
   score_emploi_chomage INT DEFAULT(0),
   score_meteo_temperature_hiver INT DEFAULT(0),
   score_meteo_temperature_ete INT DEFAULT(0),
-  score_meteo_jours_de_pluie INT DEFAULT(0)
+  score_meteo_jours_de_pluie INT DEFAULT(0),
+  classement INT,
 );
 
 DROP TABLE IF EXISTS ventes_immobilieres;
@@ -125,4 +132,16 @@ CREATE TABLE stations_meteo (
   enneigement INT DEFAULT(0),
   jours_de_pluie INT DEFAULT(0),
   mesures INT DEFAULT(0)
+);
+
+CREATE TABLE stations_meteo_mois (
+  code VARCHAR(64),
+  mois VARCHAR(2),
+  precipitations INT DEFAULT(0),
+  temperature_moyenne DECIMAL DEFAULT(0),
+  ensoleillement INT DEFAULT(0),
+  enneigement INT DEFAULT(0),
+  jours_de_pluie INT DEFAULT(0),
+  mesures INT DEFAULT(0),
+  PRIMARY KEY (code, mois)
 );

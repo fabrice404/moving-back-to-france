@@ -16,13 +16,17 @@ const FACILITY_TYPES = {
   B103: "commerce_bricolage",
   B104: "commerce_supermarche",
   B105: "commerce_supermarche",
+  B204: "commerce_boucherie",
   B207: "commerce_boulangerie",
+  B208: "commerce_primeur",
   B302: "commerce_vetements",
+  B304: "commerce_chaussures",
   B306: "commerce_meubles",
   B307: "commerce_sports_loisirs",
   B313: "sante_opticien",
 
   C108: "education_primaire",
+  C109: "education_primaire",
   C201: "education_college",
   C301: "education_lycee",
 

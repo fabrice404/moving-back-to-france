@@ -39,6 +39,10 @@
         "code": 200
       }
     ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ],
     "no-console": "warn",
     "react/prop-types": "off",
     "react/jsx-uses-react": "off",

@@ -75,6 +75,7 @@ export const importData = async () => {
   bar1.start(Object.keys(stations).length, 0);
 
   await db.query("TRUNCATE TABLE stations_meteo;");
+  await db.query("TRUNCATE TABLE stations_meteo_mois;");
 
   const defaultDataMois = {
     precipitations: 0,
@@ -151,7 +152,6 @@ export const importData = async () => {
     });
     result.temperature_ete = Math.round(result.temperature_ete / result.temperature_ete_mesures * 10) / 10;
     result.temperature_hiver = Math.round(result.temperature_hiver / result.temperature_hiver_mesures * 10) / 10;
-    console.log(result.temperature_ete_mesures, result.temperature_hiver_mesures);
     if (
       !Number.isNaN(result.precipitations) &&
       !Number.isNaN(result.temperature_moyenne) &&
@@ -165,6 +165,16 @@ export const importData = async () => {
           `, [station.id, station.nom, station.latitude, station.longitude, station.altitude, result.precipitations, result.temperature_moyenne, result.temperature_hiver, result.temperature_ete, result.ensoleillement, result.enneigement, result.jours_de_pluie, result.mesures],
         ),
       );
+      for (let i = 1; i <= 12; i++) {
+        const mois = result.mois[i.toString().padStart(2, "0")];
+        queries.push(
+          db.query(`
+            INSERT INTO stations_meteo_mois (code, mois, precipitations, temperature_moyenne, ensoleillement, enneigement, jours_de_pluie, mesures)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8) ON CONFLICT DO NOTHING;
+            `, [station.id, i, mois.precipitations, mois.temperature_moyenne, mois.ensoleillement, mois.enneigement, mois.jours_de_pluie, mois.mesures],
+          ),
+        );
+      }
     }
   }
   await Promise.all(queries);

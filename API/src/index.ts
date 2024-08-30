@@ -27,6 +27,16 @@ app.get("/villes", async (req: Request, res: Response) => {
   }
 });
 
+app.get("/ville", async (req: Request, res: Response) => {
+  debug(`GET /ville ${JSON.stringify(req.query)}`);
+  try {
+    res.json(await villes.getVille(req.query));
+  } catch (ex) {
+    debug(ex);
+    res.status(500).json({ ex });
+  }
+});
+
 app.listen(port, async () => {
   await db.connect();
   debug(`Server running on port: ${port}`);

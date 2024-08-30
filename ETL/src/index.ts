@@ -13,6 +13,7 @@ import * as dvf from "./sources/dvf";
 import * as emploi from "./sources/emploi";
 import * as meteo from "./sources/meteo";
 import * as population from "./sources/population";
+import * as taxeFonciere from "./sources/taxe-fonciere";
 
 const debug = Debug("mbtf:ETL:index");
 
@@ -29,6 +30,7 @@ const main = async () => {
   // await emploi.importData();
   // await meteo.importData();
   // await population.importData();
+  // await taxeFonciere.importData();
 
   await score.calculate();
 

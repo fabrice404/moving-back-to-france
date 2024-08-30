@@ -4,6 +4,41 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
+export interface Voisin {
+  code_insee: string;
+  nom: string;
+  geo_shape: string;
+  score: number;
+  classement: number;
+}
+
+export interface StationMeteoMois {
+  code: string;
+  mois: string;
+  precipitations: number;
+  temperature_moyenne: number;
+  ensoleillement: number;
+  enneigement: number;
+  jours_de_pluie: number;
+  mesures: number;
+}
+export interface StationMeteo {
+  code: string;
+  nom: string;
+  geo_latitude: number;
+  geo_longitude: number;
+  geo_altitude: number;
+  precipitations: number;
+  temperature_moyenne: number;
+  temperature_hiver: number;
+  temperature_ete: number;
+  ensoleillement: number;
+  enneigement: number;
+  jours_de_pluie: number;
+  mesures: number;
+  mois: StationMeteoMois[];
+}
+
 export interface Ville {
   code_insee: string;
   code_postal: string;
@@ -19,6 +54,8 @@ export interface Ville {
   geo_grande_ville_code_insee: string;
   geo_grande_ville_distance: number;
   geo_densite: number;
+  geo_taxe_fonciere: number;
+  geo_shape: string;
   /* Commerce */
   commerce_bricolage: number;
   commerce_boulangerie: number;
@@ -27,7 +64,11 @@ export interface Ville {
   commerce_sports_loisirs: number;
   commerce_supermarche: number;
   commerce_vetements: number;
+  commerce_boucherie: number;
+  commerce_primeur: number;
+  commerce_chaussures: number;
   /* Education */
+  education_maternelle: number;
   education_primaire: number;
   education_college: number;
   education_lycee: number;
@@ -90,10 +131,12 @@ export interface Ville {
   score_meteo_temperature_hiver: number;
   score_meteo_temperature_ete: number;
   score_meteo_jours_de_pluie: number;
+  classement: number;
 
   /* Calculated */
   geo_grande_ville_nom: string;
-  classement: number;
+  voisins: Voisin[];
+  station_meteo: StationMeteo;
 }
 
 export interface VillesParams {

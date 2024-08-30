@@ -34,9 +34,9 @@ export const importData = async () => {
     if (code_postal.length === 5) {
       queries.push(
         db.query(`
-          INSERT INTO villes (code_insee, code_postal, geo_altitude, geo_latitude, geo_longitude, geo_superficie) VALUES ($1, $2, $3, $4, $5, $6)
-          ON CONFLICT (code_insee) DO UPDATE SET code_postal = $2, geo_altitude = $3, geo_latitude = $4, geo_longitude = $5, geo_superficie = $6;
-          `, [item.insee_com, code_postal, item.z_moyen, item.geo_point_2d.lat, item.geo_point_2d.lon, parseFloat(item.superficie) / 100],
+          INSERT INTO villes (code_insee, code_postal, geo_altitude, geo_latitude, geo_longitude, geo_superficie, geo_shape) VALUES ($1, $2, $3, $4, $5, $6, $7)
+          ON CONFLICT (code_insee) DO UPDATE SET code_postal = $2, geo_altitude = $3, geo_latitude = $4, geo_longitude = $5, geo_superficie = $6, geo_shape = $7;
+          `, [item.insee_com, code_postal, item.z_moyen, item.geo_point_2d.lat, item.geo_point_2d.lon, parseFloat(item.superficie) / 100, JSON.stringify(item.geo_shape)],
         ),
       );
     }

@@ -144,6 +144,7 @@ export default function Home() {
           <TableColumn key="geo_population" allowsSorting align="center">Population</TableColumn>
           {getColumnHeader("geo_densite", "Densité")}
           {getColumnHeader("geo_immobilier_prix_m2", "Prix m²")}
+          {getColumnHeader("geo_taxe_fonciere", "Taxe foncière")}
           {getColumnHeader("education_primaire", "primaire.png")}
           {getColumnHeader("education_college", "college.png")}
           {getColumnHeader("sante_medecin_pour_mille", "medecin.png")}
@@ -176,7 +177,7 @@ export default function Home() {
           {(ville: Ville) => (
             <TableRow key={ville.code_insee}>
               <TableCell>{ville.classement}</TableCell>
-              <TableCell>{ville.nom}</TableCell>
+              <TableCell><Link className="whitespace-nowrap" href={`/ville/${ville.code_insee}/${ville.nom}/`}>{ville.nom}</Link></TableCell>
               <TableCell><Link href="#" onClick={() => setParams({ ...params, departement: ville.code_departement })}>{ville.code_departement}</Link></TableCell>
               <TableCell>
                 <Chip className="border-none" color="default" radius="sm" size="sm">
@@ -185,6 +186,11 @@ export default function Home() {
               </TableCell>
               {getColumnCell(ville, "geo_densite", "score_geo_densite")}
               {getColumnCell(ville, "geo_immobilier_prix_m2", "score_geo_immobilier_prix_m2")}
+              <TableCell>
+                <Chip className="border-none" color="default" radius="sm" size="sm">
+                  {Intl.NumberFormat('fr-FR').format(ville.geo_taxe_fonciere)}
+                </Chip>
+              </TableCell>
               {getColumnCell(ville, "education_primaire", "score_education_primaire")}
               {getColumnCell(ville, "education_college", "score_education_college")}
               {getColumnCell(ville, "sante_medecin_pour_mille", "score_sante_medecin")}

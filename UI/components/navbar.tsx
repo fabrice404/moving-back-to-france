@@ -5,18 +5,19 @@ import {
   NavbarBrand,
   NavbarItem,
 } from "@nextui-org/navbar";
-import NextLink from "next/link";
+import Link from "next/link";
 
 import { ThemeSwitch } from "@/components/theme-switch";
+
 
 export const Navbar = () => {
   return (
     <NextUINavbar maxWidth="full" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
+          <Link className="flex justify-start items-center gap-1" href="/">
             <p className="font-bold text-inherit">MOVING BACK TO FRANCE?</p>
-          </NextLink>
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 

@@ -46,6 +46,27 @@ export const listVilles = async (options?: ListOptions): Promise<any> => {
   );
 };
 
+export const listVillesPourCarte = async (): Promise<any> => {
+  debug("listVillesPourCarte");
+  const result = await db.query(`
+    SELECT 
+      villes.*,
+      ABS(villes.score) AS score,
+      grande_ville.nom AS geo_grande_ville_nom
+    FROM villes
+      INNER JOIN villes AS grande_ville ON grande_ville.code_insee = villes.geo_grande_ville_code_insee
+      INNER JOIN stations_meteo ON stations_meteo.code = villes.geo_station_meteo_code
+    WHERE villes.score != 0`,
+  );
+
+  return utils.formatResponse(
+    result.rows,
+    1,
+    +result.rows.length,
+    +result.rows.length,
+  );
+};
+
 export interface GetOptions {
   code_insee?: string;
 }

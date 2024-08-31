@@ -37,6 +37,16 @@ app.get("/ville", async (req: Request, res: Response) => {
   }
 });
 
+app.get("/carte", async (req: Request, res: Response) => {
+  debug("GET /carte");
+  try {
+    res.json(await villes.listVillesPourCarte());
+  } catch (ex) {
+    debug(ex);
+    res.status(500).json({ ex });
+  }
+});
+
 app.listen(port, async () => {
   await db.connect();
   debug(`Server running on port: ${port}`);

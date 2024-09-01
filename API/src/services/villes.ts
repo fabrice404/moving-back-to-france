@@ -70,7 +70,6 @@ export const listVillesPourCarte = async (): Promise<any> => {
 export interface GetOptions {
   code_insee?: string;
 }
-
 export const getVille = async (options?: GetOptions): Promise<any> => {
   if (!options?.code_insee) {
     return;
@@ -98,6 +97,9 @@ export const getVille = async (options?: GetOptions): Promise<any> => {
 
   const mois = await db.query("SELECT * FROM stations_meteo_mois WHERE code = $1;", [ville.geo_station_meteo_code]);
   ville.station_meteo.mois = mois.rows;
+
+  const ventes = await db.query("SELECT * FROM ventes_immobilieres WHERE code_insee = $1 ORDER BY date DESC;", [ville.code_insee]);
+  ville.ventes_immobilieres = ventes.rows;
 
   return utils.formatResponse([ville]);
 };

@@ -104,7 +104,8 @@ CREATE TABLE ventes_immobilieres (
   code_insee VARCHAR(5),
   prix INT,
   surface INT,
-  pieces INT
+  pieces INT,
+  date VARCHAR(10)
 );
 
 DROP TABLE IF EXISTS voisins;

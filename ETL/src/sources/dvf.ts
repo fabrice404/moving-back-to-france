@@ -21,7 +21,7 @@ export const importData = async () => {
       path.join(__dirname, `../../../data/data-gouv/dvf${year}.csv`),
       {
         matchPattern: /,Vente,.*,Maison,/g,
-        columnsToKeep: ["id_mutation", "code_commune", "valeur_fonciere", "surface_reelle_bati", "nombre_pieces_principales"],
+        columnsToKeep: ["id_mutation", "date_mutation", "code_commune", "valeur_fonciere", "surface_reelle_bati", "nombre_pieces_principales"],
       },
     );
 
@@ -40,9 +40,9 @@ export const importData = async () => {
       if (!Object.values(item).some((v) => v == null || v === "")) {
         queries.push(
           db.query(`
-        INSERT INTO ventes_immobilieres (id_vente, code_insee, prix, surface, pieces) VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO ventes_immobilieres (id_vente, code_insee, prix, surface, pieces, date) VALUES ($1, $2, $3, $4, $5, $6)
         ON CONFLICT (id_vente) DO NOTHING;
-        `, [item.id_mutation, item.code_commune, Math.round(item.valeur_fonciere), item.surface_reelle_bati, item.nombre_pieces_principales],
+        `, [item.id_mutation, item.code_commune, Math.round(item.valeur_fonciere), item.surface_reelle_bati, item.nombre_pieces_principales, item.date_mutation],
           ),
         );
       }

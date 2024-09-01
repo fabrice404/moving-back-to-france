@@ -26,7 +26,7 @@ const main = async () => {
   // await bpe.importData();
   // await codePostalGPS.importData();
   // await delinquance.importData();
-  // await dvf.importData();
+  await dvf.importData();
   // await emploi.importData();
   // await meteo.importData();
   // await population.importData();

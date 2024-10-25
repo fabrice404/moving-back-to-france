@@ -50,13 +50,13 @@ export const importData = async () => {
     await Promise.all(queries);
     bar1.update(data.length);
     bar1.stop();
-
   }
 
   debug("importData: aggregating data");
   const result = await db.query(`
     SELECT code_insee, ROUND(AVG(prix / surface)) AS prix_m2
     FROM ventes_immobilieres
+    WHERE surface BETWEEN 100 AND 200
     GROUP BY code_insee
   `);
   const bar2 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);

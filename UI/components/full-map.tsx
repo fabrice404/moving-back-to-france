@@ -3,7 +3,7 @@ import { MapContainer, GeoJSON, Tooltip, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
-import { getScoreColor } from "@/helpers";
+import { getScoreColorHex } from "@/helpers";
 import { Ville } from "@/types";
 
 export default function FullMap({ villes }: { villes: Ville[] }) {
@@ -26,7 +26,7 @@ export default function FullMap({ villes }: { villes: Ville[] }) {
               window.location.href = `/ville/${ville.code_insee}/${ville.nom}`;
             }
           }}
-          style={{ color: getScoreColor(ville.score) }}
+          style={{ color: getScoreColorHex(ville.score) }}
         >
           <Tooltip sticky direction="top">{ville.nom} #{ville.classement}</Tooltip>
         </GeoJSON>

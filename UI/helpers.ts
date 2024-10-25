@@ -27,7 +27,7 @@ export const colors = [
   "#28c800",
 ];
 
-export const getScoreColor = (score: number) => {
+export const getScoreColorHex = (score: number) => {
   if (score >= 100) {
     return colors[colors.length - 1];
   }
@@ -36,4 +36,16 @@ export const getScoreColor = (score: number) => {
   }
 
   return colors[Math.floor(score / 4)];
-}
+};
+
+
+export const getScoreColorText = (score: number) => {
+  if (score >= 80) {
+    return "success";
+  }
+  if (score >= 60) {
+    return "warning";
+  }
+
+  return "danger";
+};

@@ -10,7 +10,7 @@ export default function Carte() {
 
   useEffect(() => {
     if (data == null) {
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/carte`)
+      fetch(`${process.env.NEXT_PUBLIC_API_HOST}/carte?departement=1`)
         .then(response => response.json())
         .then(data => setData(data));
     }

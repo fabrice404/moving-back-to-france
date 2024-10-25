@@ -1,11 +1,12 @@
 "use client";
 
-import { Chip, Spinner } from "@nextui-org/react";
+import { Chip, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import dynamic from 'next/dynamic';
 import { useEffect, useState, useMemo } from "react"
 import { ApexOptions } from "apexcharts";
 
 import * as types from "@/types";
+import { getScoreColorText } from "@/helpers";
 
 
 export default function Ville({ params }: any) {
@@ -71,7 +72,8 @@ export default function Ville({ params }: any) {
     <section className="w-full">
       <div className="text-center pb-4">
         <h1 className="text-3xl font-bold">{ville.nom}</h1>
-        <Chip className="border-none" color="primary" radius="sm" size="sm">{ville.code_postal}</Chip>
+        <Chip className="border-none mx-1" color="primary" radius="sm" size="sm">{ville.code_postal}</Chip>
+        <Chip className="border-none mx-1" color={getScoreColorText(ville.score)} radius="sm" size="sm">{ville.score}%</Chip>
       </div>
       <div className="flex">
         <div className="w-1/3 flex gap-4 p-2">
@@ -150,31 +152,57 @@ export default function Ville({ params }: any) {
                 </tbody>
               </table>
             </div>
-
-            {/* <div className={styleBlock}>
-            <h2 className={styleCategory}>Delinquance</h2>
-            <table className={styleTable}>
-              <tbody>
-                {tableRow("aggression.png", "Aggression", ville.delinquance_aggression)}
-                {tableRow("cambriolage.png", "Cambriolage", ville.delinquance_cambriolage)}
-                {tableRow("stupefiant.png", "Stupéfiant", ville.delinquance_stupefiant)}
-                {tableRow("vol.png", "Vol", ville.delinquance_vol)}
-                {tableRow("autre.png", "autre", ville.delinquance_autre)}
-              </tbody>
-            </table>
-          </div> */}
-
           </div>
         </div>
         <div className="w-2/3 flex p-2">
-          <div className={`${styleBlock} w-full`}>
-            <Map ville={ville} />
-          </div>
+          {Intl.NumberFormat('fr-FR').format(ville.geo_population)}
+          /
+          {Intl.NumberFormat('fr-FR').format(ville.geo_immobilier_prix_m2)}
+          /
+          {Intl.NumberFormat('fr-FR').format(ville.geo_taxe_fonciere)}
+
+          {Intl.NumberFormat('fr-FR').format(ville.delinquance_aggression)}
+          {Intl.NumberFormat('fr-FR').format(ville.delinquance_cambriolage)}
+          {Intl.NumberFormat('fr-FR').format(ville.delinquance_stupefiant)}
+          {Intl.NumberFormat('fr-FR').format(ville.delinquance_vol)}
+          {Intl.NumberFormat('fr-FR').format(ville.delinquance_autre)}
         </div>
       </div>
-      <div className={styleBlock}>
-        <h2 className={styleCategory}>Météo: {ville.station_meteo.nom}</h2>
-        <Chart height={300} options={temperaturesOptions} series={temperaturesSeries} type="line" />
+      <div className="flex gap-4">
+        <div className="w-1/2">
+          <div className={`${styleBlock} w-full h-1/3`}>
+            <Map ville={ville} />
+          </div>
+          <div className={styleBlock}>
+            <h2 className={styleCategory}>Météo: {ville.station_meteo.nom}</h2>
+            <Chart height={300} options={temperaturesOptions} series={temperaturesSeries} type="line" />
+          </div>
+        </div>
+        <div className="w-1/2">
+          <div className={styleBlock}>
+            <h2 className={styleCategory}>Ventes immobilières</h2>
+            <Table isStriped aria-label="Ventes immobilières">
+              <TableHeader>
+                <TableColumn>Date</TableColumn>
+                <TableColumn align="end">Prix</TableColumn>
+                <TableColumn align="end">Surface</TableColumn>
+                <TableColumn align="end">Pièces</TableColumn>
+                <TableColumn align="end">Prix m²</TableColumn>
+              </TableHeader>
+              <TableBody items={ville.ventes_immobilieres.filter((v) => v.surface >= 100 && v.date.startsWith("2023"))}>
+                {(vente: types.VenteImmobiliere) => (
+                  <TableRow key={vente.id_vente}>
+                    <TableCell>{vente.date}</TableCell>
+                    <TableCell>{Intl.NumberFormat('fr-FR').format(vente.prix)} €</TableCell>
+                    <TableCell>{Intl.NumberFormat('fr-FR').format(vente.surface)} m²</TableCell>
+                    <TableCell>{Intl.NumberFormat('fr-FR').format(vente.pieces)}</TableCell>
+                    <TableCell>{Intl.NumberFormat('fr-FR').format(Math.round(vente.prix / vente.surface))} €/m²</TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
       </div>
     </section>
   )

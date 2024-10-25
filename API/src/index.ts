@@ -7,6 +7,7 @@ import helmet from "helmet";
 
 import * as db from "./lib/db";
 
+import * as shortlist from "./services/shortlist";
 import * as villes from "./services/villes";
 
 const debug = Debug("mbtf:API:index");
@@ -40,7 +41,28 @@ app.get("/ville", async (req: Request, res: Response) => {
 app.get("/carte", async (req: Request, res: Response) => {
   debug("GET /carte");
   try {
-    res.json(await villes.listVillesPourCarte());
+    res.json(await villes.listVillesPourCarte(req.query));
+  } catch (ex) {
+    debug(ex);
+    res.status(500).json({ ex });
+  }
+});
+
+app.get("/shortlist", async (req: Request, res: Response) => {
+  debug("GET /shortlist");
+  try {
+    res.json(await shortlist.getShortlist());
+  } catch (ex) {
+    debug(ex);
+    res.status(500).json({ ex });
+  }
+});
+
+app.post("/shortlist", async (req: Request, res: Response) => {
+  debug("POST /shortlist");
+  try {
+    console.log(req.body);
+    res.json(await shortlist.updateShortlist(req.body));
   } catch (ex) {
     debug(ex);
     res.status(500).json({ ex });

@@ -10,6 +10,7 @@ export interface ListOptions {
   page?: number;
   sort?: string;
   order?: "ASC" | "DESC";
+  codeInsee?: string;
   departement?: string;
 }
 
@@ -22,6 +23,9 @@ export const listVilles = async (options?: ListOptions): Promise<any> => {
   options.sort = options.sort || "score";
   options.order = options.order || "DESC";
   debug(`listVilles ${JSON.stringify(options)}`);
+
+  const departementWhere = options.departement ? `AND villes.code_departement = '${options.departement}'` : "";
+  const codeInseeWhere = options.codeInsee ? `AND villes.code_insee IN (${options.codeInsee.split(/,/gi).map(ci => `'${ci}'`).join(",")})` : "";
   const result = await db.query(`
     SELECT 
       villes.*,
@@ -30,13 +34,14 @@ export const listVilles = async (options?: ListOptions): Promise<any> => {
       INNER JOIN villes AS grande_ville ON grande_ville.code_insee = villes.geo_grande_ville_code_insee
       INNER JOIN stations_meteo ON stations_meteo.code = villes.geo_station_meteo_code
     WHERE villes.classement IS NOT NULL
-      ${options.departement ? `AND villes.code_departement = '${options.departement}'` : ""}
-    ORDER BY villes.${options.sort} ${options.order}, villes.score DESC, villes.score_geo_population ASC
+      ${departementWhere}
+      ${codeInseeWhere}
+    ORDER BY villes.${options.sort} ${options.order}, villes.classement ASC
     LIMIT $1 
     OFFSET $2`,
     [options.limit, (options.page - 1) * options.limit],
   );
-  const totalRows = await db.query("SELECT COUNT(*) AS total FROM villes WHERE villes.code_postal IS NOT NULL AND villes.geo_population IS NOT NULL AND villes.score > 0");
+  const totalRows = await db.query(`SELECT COUNT(*) AS total FROM villes WHERE villes.classement IS NOT NULL ${departementWhere} ${codeInseeWhere};`);
 
   return utils.formatResponse(
     result.rows,
@@ -46,7 +51,7 @@ export const listVilles = async (options?: ListOptions): Promise<any> => {
   );
 };
 
-export const listVillesPourCarte = async (): Promise<any> => {
+export const listVillesPourCarte = async (options?: ListOptions): Promise<any> => {
   debug("listVillesPourCarte");
   const result = await db.query(`
     SELECT 
@@ -56,7 +61,7 @@ export const listVillesPourCarte = async (): Promise<any> => {
     FROM villes
       INNER JOIN villes AS grande_ville ON grande_ville.code_insee = villes.geo_grande_ville_code_insee
       INNER JOIN stations_meteo ON stations_meteo.code = villes.geo_station_meteo_code
-    WHERE villes.score != 0`,
+    WHERE villes.score ${options?.departement ? ">" : "!="} 0`,
   );
 
   return utils.formatResponse(

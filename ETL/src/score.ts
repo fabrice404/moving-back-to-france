@@ -49,11 +49,11 @@ export const calculate = async () => {
   await db.query("UPDATE villes SET score_geo_grande_ville_distance = 0 WHERE score_geo_grande_ville_distance < 0");
   await db.query("UPDATE villes SET score_geo_grande_ville_distance = 100 WHERE score_geo_grande_ville_distance > 100");
 
-  addComponent("score_geo_population");
-  await db.query("UPDATE villes SET score_geo_population = (100 - (100 * ABS($1 - geo_population) / $1));", [35000]);
+  // addComponent("score_geo_population");
+  // await db.query("UPDATE villes SET score_geo_population = (100 - (100 * ABS($1 - geo_population) / $1));", [35000]);
 
-  addComponent("score_geo_densite");
-  await db.query("UPDATE villes SET score_geo_densite = ROUND(100 - (100 * ABS($1 - geo_densite) / ($1 * 1.5)));", [1500]);
+  // addComponent("score_geo_densite");
+  // await db.query("UPDATE villes SET score_geo_densite = ROUND(100 - (100 * ABS($1 - geo_densite) / ($1 * 1.5)));", [1500]);
 
   addComponent("score_geo_immobilier_prix_m2");
   await db.query("UPDATE villes SET score_geo_immobilier_prix_m2 = ROUND(100 - (100 * ABS($1 - geo_immobilier_prix_m2) / ($1 * 1.5)));", [2000]);
@@ -93,10 +93,11 @@ export const calculate = async () => {
 
   debug("Calculating: score");
   await db.query("UPDATE villes SET score_geo_immobilier_prix_m2 = score_geo_immobilier_prix_m2 * 2;");
-  await db.query(`UPDATE villes SET score = (${components.join("+")}) / ${components.length + 1};`);
+  // await db.query(`UPDATE villes SET score = (${components.join("+")}) / ${components.length + 1};`);
+  await db.query(`UPDATE villes SET score = (${components.join("+")});`);
   await db.query("UPDATE villes SET score = 0 WHERE score IS NULL;");
   // await db.query("UPDATE villes SET score = -1 * score WHERE code_departement NOT IN ('01','03','14','15','16','17','18','19','23','24','27','28','33','35','36','37','38','40','41','42','43','44','45','46','47','49','50','53','56','58','61','63','64','69','71','72','73','74','85')");
-  await db.query("UPDATE villes SET score = -1 * score WHERE code_departement NOT IN ('14','18','19','24','27','28','33','35','37','38','40','41','42','43','44','45','46','47','50','56','64','69','73','74','85')");
+  //await db.query("UPDATE villes SET score = -1 * score WHERE code_departement NOT IN ('14', '18','19','24','28','33','35','38','41','42','43','44','45','46','47','56','64','69','73','74')");
 
   debug("Calculating: classement");
   await db.query("UPDATE villes SET classement = NULL");

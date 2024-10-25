@@ -39,6 +39,15 @@ export interface StationMeteo {
   mois: StationMeteoMois[];
 }
 
+export interface VenteImmobiliere {
+  id_vente: string;
+  code_insee: string;
+  date: string;
+  prix: number;
+  surface: number;
+  pieces: number;
+}
+
 export interface Ville {
   code_insee: string;
   code_postal: string;
@@ -137,6 +146,7 @@ export interface Ville {
   geo_grande_ville_nom: string;
   voisins: Voisin[];
   station_meteo: StationMeteo;
+  ventes_immobilieres: VenteImmobiliere[];
 }
 
 export interface VillesParams {
@@ -145,5 +155,6 @@ export interface VillesParams {
   sort: string;
   order: "ASC" | "DESC";
   scores: boolean;
-  departement: string;
+  departement?: string;
+  codeInsee?: string;
 }

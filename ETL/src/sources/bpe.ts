@@ -25,6 +25,7 @@ const FACILITY_TYPES = {
   B307: "commerce_sports_loisirs",
   B313: "sante_opticien",
 
+  C107: "education_maternelle",
   C108: "education_primaire",
   C109: "education_primaire",
   C201: "education_college",

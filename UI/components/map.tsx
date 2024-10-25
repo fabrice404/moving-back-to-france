@@ -3,7 +3,7 @@ import { MapContainer, GeoJSON, TileLayer, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
-import { getScoreColor } from "@/helpers";
+import { getScoreColorHex } from "@/helpers";
 
 export default function Map({ ville }: any) {
   return (
@@ -28,7 +28,7 @@ export default function Map({ ville }: any) {
               window.location.href = `/ville/${voisin.code_insee}/${voisin.nom}`;
             }
           }}
-          style={{ color: getScoreColor(voisin.score) }}
+          style={{ color: getScoreColorHex(voisin.score) }}
         >
           <Tooltip sticky direction="top">{voisin.nom} #{voisin.classement}</Tooltip>
         </GeoJSON>

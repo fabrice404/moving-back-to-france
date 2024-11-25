@@ -9,25 +9,11 @@ updates:
     prefix: "npm"
     include: "scope"
   groups:
-    dev-dependencies-patch-and-minor:
-      dependency-type: development
+    dependencies-patch-and-minor:
       update-types:
         - minor
         - patch
-    dev-dependencies-major:
-      dependency-type: development
-      update-types:
-        - major
-    prod-dependencies-patch-and-minor:
-      dependency-type: production
-      update-types:
-        - minor
-        - patch
-    prod-dependencies-major:
-      dependency-type: production
-      update-types:
-        - major
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 20
   reviewers:
   - fabrice404
   assignees:
@@ -41,25 +27,11 @@ updates:
     prefix: "npm"
     include: "scope"
   groups:
-    dev-dependencies-patch-and-minor:
-      dependency-type: development
+    dependencies-patch-and-minor:
       update-types:
         - minor
         - patch
-    dev-dependencies-major:
-      dependency-type: development
-      update-types:
-        - major
-    prod-dependencies-patch-and-minor:
-      dependency-type: production
-      update-types:
-        - minor
-        - patch
-    prod-dependencies-major:
-      dependency-type: production
-      update-types:
-        - major
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 20
   reviewers:
   - fabrice404
   assignees:
@@ -73,24 +45,10 @@ updates:
     prefix: "npm"
     include: "scope"
   groups:
-    dev-dependencies-patch-and-minor:
-      dependency-type: development
+    dependencies-patch-and-minor:
       update-types:
         - minor
         - patch
-    dev-dependencies-major:
-      dependency-type: development
-      update-types:
-        - major
-    prod-dependencies-patch-and-minor:
-      dependency-type: production
-      update-types:
-        - minor
-        - patch
-    prod-dependencies-major:
-      dependency-type: production
-      update-types:
-        - major
   open-pull-requests-limit: 10
   reviewers:
   - fabrice404

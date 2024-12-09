@@ -26,7 +26,7 @@
   "dependencies": {
     "@dsnp/parquetjs": "1.8.5",
     "cli-progress": "3.12.0",
-    "debug": "4.3.7",
+    "debug": "4.4.0",
     "dotenv": "16.4.7",
     "pg": "8.13.1"
   }

@@ -97,7 +97,7 @@ export const calculate = async () => {
   await db.query(`UPDATE villes SET score = (${components.join("+")});`);
   await db.query("UPDATE villes SET score = 0 WHERE score IS NULL;");
   // await db.query("UPDATE villes SET score = -1 * score WHERE code_departement NOT IN ('01','03','14','15','16','17','18','19','23','24','27','28','33','35','36','37','38','40','41','42','43','44','45','46','47','49','50','53','56','58','61','63','64','69','71','72','73','74','85')");
-  //await db.query("UPDATE villes SET score = -1 * score WHERE code_departement NOT IN ('14', '18','19','24','28','33','35','38','41','42','43','44','45','46','47','56','64','69','73','74')");
+  await db.query("UPDATE villes SET score = -1 * score WHERE code_departement NOT IN ('14', '76')");
 
   debug("Calculating: classement");
   await db.query("UPDATE villes SET classement = NULL");

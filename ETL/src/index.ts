@@ -15,6 +15,9 @@ import * as meteo from "./sources/meteo";
 import * as population from "./sources/population";
 import * as taxeFonciere from "./sources/taxe-fonciere";
 
+
+import * as city from "./city";
+
 const debug = Debug("mbtf:ETL:index");
 
 const main = async () => {
@@ -32,7 +35,11 @@ const main = async () => {
   // await population.importData();
   // await taxeFonciere.importData();
 
-  await score.calculate();
+
+  // await score.calculate();
+
+  await city.main("caen", 49.1, 49.5, -0.55, -0.10, 49.25, -0.35);
+  await city.main("le-havre", 49.4, 49.9, 0, 0.55, 49.55, 0.25);
 
   await db.disconnect();
 };

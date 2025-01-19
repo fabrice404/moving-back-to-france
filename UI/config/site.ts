@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Moving back to France?",
+  name: "MbtF",
   description: "",
   navItems: [
     {

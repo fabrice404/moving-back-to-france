@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import { divIcon } from "leaflet";
+import { useState } from "react";
 
 export const getSVG = (outColor: string = "#ffffff", inColor: string = "#ffffff") => `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="40" viewBox="0 0 256 256" xml:space="preserve">
   <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
@@ -28,24 +29,33 @@ export const getIcon = (outColor: string = "#ffffff", inColor: string = "#ffffff
 })
 
 export default function MapCity({ city }: any) {
+  const [bakeries, setBakeries] = useState<boolean>(false);
+  const [supermarkets, setSupermarkets] = useState<boolean>(false);
+
   return (
     <>
       <div className="flex items-center justify-end">
         <div dangerouslySetInnerHTML={{ __html: getSVG("#d5312c") }} />
         <div className="mr-5">Ecole primaire</div>
+
         <div dangerouslySetInnerHTML={{ __html: getSVG("#ffcc01") }} />
         <div className="mr-5">Collège</div>
+
         <div dangerouslySetInnerHTML={{ __html: getSVG("#0873d7") }} />
         <div className="mr-5">Lycée</div>
+
+        <input type="checkbox" id="supermarkets" onChange={() => setSupermarkets(!supermarkets)} />
         <div dangerouslySetInnerHTML={{ __html: getSVG("#58ac45") }} />
-        <div className="mr-5">Supermarché</div>
-        <div dangerouslySetInnerHTML={{ __html: getSVG("#d26ab7") }} />
-        <div className="mr-5">Boulangerie</div>
+        <label htmlFor="supermarkets" className="mr-5">Supermarché</label>
+
+        <input type="checkbox" id="bakeries" onChange={() => setBakeries(!bakeries)} />
+        <span dangerouslySetInnerHTML={{ __html: getSVG("#d26ab7") }} />
+        <label htmlFor="bakeries" className="mr-5">Boulangerie</label>
       </div>
       <MapContainer
         center={[city.center.lat, city.center.long]}
         className="w-full h-[95%]"
-        zoom={12}
+        zoom={11}
       >
         <TileLayer
           attribution='&copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -85,7 +95,7 @@ export default function MapCity({ city }: any) {
             </Marker>
           )
         })}
-        {city.supermarkets.map((s: any) => {
+        {supermarkets && city.supermarkets.map((s: any) => {
           return (
             <Marker key={s.id}
               icon={getIcon("#58ac45")}
@@ -98,7 +108,7 @@ export default function MapCity({ city }: any) {
             </Marker>
           )
         })}
-        {city.bakeries.map((s: any) => {
+        {bakeries && city.bakeries.map((s: any) => {
           return (
             <Marker key={s.id}
               icon={getIcon("#d26ab7")}

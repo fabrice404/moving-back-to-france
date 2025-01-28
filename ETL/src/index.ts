@@ -35,11 +35,10 @@ const main = async () => {
   // await population.importData();
   // await taxeFonciere.importData();
 
-
   // await score.calculate();
 
-  await city.main("caen", 49.1, 49.5, -0.55, -0.10, 49.25, -0.35);
-  await city.main("le-havre", 49.4, 49.9, 0, 0.55, 49.55, 0.25);
+  await city.main("caen", 48.9, 49.6, -0.65, 0, 49.2, -0.35);
+  await city.main("le-havre", 49.3, 50, -0.10, 0.65, 49.55, 0.25);
 
   await db.disconnect();
 };

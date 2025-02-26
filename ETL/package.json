@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@dsnp/parquetjs": "1.8.6",
-    "axios": "^1.7.9",
+    "axios": "^1.8.1",
     "cli-progress": "3.12.0",
     "debug": "4.4.0",
     "dotenv": "16.4.7",
